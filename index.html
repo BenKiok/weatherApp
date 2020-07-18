@@ -4,18 +4,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Check your local weather</h1>
-    <form>
-        <label for='city'>City</label>
-        <input id='city' type="text">
-        
-        <h2>OR</h2>
+    <div id="query">
+        <h1>Check your local weather</h1>
+        <form>
+            <label for='city'>City</label>
+            <input id='city' type="text">
+            
+            <h2>OR</h2>
 
-        <label for='zip'>Zip Code</label>
-        <input id='zip' type="text">
+            <label for='zip'>Zip Code</label>
+            <input id='zip' type="text">
 
-        <button>Search</button>
-    </form>
+            <button>Search</button>
+        </form>
+    </div>
+    
+    <div id="results"></div>
+    
     <script src='script.js'></script>
 </body>
 </html>

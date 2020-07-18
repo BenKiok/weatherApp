@@ -1,22 +1,23 @@
 (function weatherApp() {
     const url = 'https://api.openweathermap.org/data/2.5/weather?';
     const apiKey = '&appid=f678ae60b86c68b4d4cacf324164f592';
-
+    
     document.querySelector('button').addEventListener('click', (event) => {
-        let userData, dataStr, weatherData;
+        let userData, dataStr;
 
         userData = collectUserData();
         if (userData.zip || userData.city) {
             dataStr = processUserData(userData);
 
             if (dataStr) {
-                fetchWeatherData(dataStr);
+                fetchWeatherData(dataStr, displayWeatherData);
             }
         } else {
             alert('Enter a city or a zip code.');
         }
         
         event.preventDefault();
+        document.querySelector('form').reset();
     })
 
     function collectUserData() {
@@ -38,16 +39,43 @@
         return locationStr;
     }
 
-    function fetchWeatherData(location, func = (data) => {console.log(data)}) {
+    function fetchWeatherData(location, func = (data) => {alert(data)}) {
         fetch(url + location + apiKey)
         .then((data) => {
             return data.json();
         })
         .then((json) => {
-           func(json);
+            func(json);
         })
         .catch((err) => {
-            throw err;
+            func(null);
         });
+    }
+
+    function displayWeatherData(obj) {
+        const container = document.querySelector('#results');
+
+        if (container.childNodes.length) {
+            Array.from(container.childNodes).forEach((child) => {
+                child.remove();
+            });
+        }
+
+        if (obj) {
+            const city = document.createElement('h2'),
+                  weather = document.createElement('h3'),
+                  temp = document.createElement('h3'),
+                  feelsLike = document.createElement('h3');
+
+            city.innerHTML = "Today's weather in " + obj.name;
+            weather.innerHTML = obj.weather[0].main;
+            temp.innerHTML = 'Temperature: ' + obj.main.temp + 'K';
+            feelsLike.innerHTML = 'Feels like: ' + obj.main.feels_like + 'K';
+
+            container.append(city, weather, temp, feelsLike);
+        } else {
+            alert('Location was not found. Please try again.');
+        }
+        
     }
 })();
