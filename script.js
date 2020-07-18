@@ -1,7 +1,7 @@
 (function weatherApp() {
     const url = 'https://api.openweathermap.org/data/2.5/weather?';
     const apiKey = '&appid=f678ae60b86c68b4d4cacf324164f592';
-    
+
     document.querySelector('button').addEventListener('click', (event) => {
         let userData, dataStr;
 
@@ -66,16 +66,41 @@
                   weather = document.createElement('h3'),
                   temp = document.createElement('h3'),
                   feelsLike = document.createElement('h3');
+            let bool1, bool2;
 
             city.innerHTML = "Today's weather in " + obj.name;
             weather.innerHTML = obj.weather[0].main;
-            temp.innerHTML = 'Temperature: ' + obj.main.temp + 'K';
-            feelsLike.innerHTML = 'Feels like: ' + obj.main.feels_like + 'K';
+            temp.innerHTML = 'Temperature: ' + toFahrenheit(obj.main.temp) + 'F';
+            feelsLike.innerHTML = 'Feels like: ' + toFahrenheit(obj.main.feels_like) + 'F';
+
+            temp.addEventListener('click', () => {
+                temp.innerHTML = bool1 ?
+                    'Temperature: ' + toFahrenheit(obj.main.temp) + 'F' :
+                    'Temperature: ' + toCelsius(obj.main.temp) + 'C'
+
+                bool1 = !bool1;
+            });
+
+            feelsLike.addEventListener('click', () => {
+                feelsLike.innerHTML = bool2 ?
+                    'Feels like: ' + toFahrenheit(obj.main.feels_like) + 'F' :
+                    'Feels like: ' + toCelsius(obj.main.feels_like) + 'C'
+
+                bool2 = !bool2;
+            });
 
             container.append(city, weather, temp, feelsLike);
         } else {
             alert('Location was not found. Please try again.');
         }
         
+    }
+
+    function toFahrenheit(val) {
+        return Math.floor((val - 273.15) * 9 / 5 + 32);
+    }
+
+    function toCelsius(val) {
+        return Math.floor(val - 273.15);
     }
 })();
