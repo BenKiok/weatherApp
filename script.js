@@ -1,6 +1,11 @@
-(function weatherApp() {
-    const url = 'https://api.openweathermap.org/data/2.5/weather?';
-    const apiKey = '&appid=f678ae60b86c68b4d4cacf324164f592';
+const weatherApp = (() => {
+
+    const api = (() => {
+        const url = 'https://api.openweathermap.org/data/2.5/weather?';
+        const key = '&appid=f678ae60b86c68b4d4cacf324164f592';
+
+        return { url, key };
+    })();
 
     document.querySelector('button').addEventListener('click', (event) => {
         let userData, dataStr;
@@ -40,7 +45,7 @@
     }
 
     function fetchWeatherData(location, func = (data) => {alert(data)}) {
-        fetch(url + location + apiKey)
+        fetch(api.url + location + api.key)
         .then((data) => {
             return data.json();
         })
@@ -55,23 +60,21 @@
     function displayWeatherData(obj) {
         const container = document.querySelector('#results');
 
-        if (container.childNodes.length) {
-            Array.from(container.childNodes).forEach((child) => {
-                child.remove();
-            });
-        }
+        removeSearchResults(container);
 
         if (obj) {
             const city = document.createElement('h2'),
                   weather = document.createElement('h3'),
                   temp = document.createElement('h3'),
-                  feelsLike = document.createElement('h3');
+                  feelsLike = document.createElement('h3'),
+                  returnBtn = document.createElement('button');
             let bool1, bool2;
 
             city.innerHTML = "Today's weather in " + obj.name;
             weather.innerHTML = obj.weather[0].main;
             temp.innerHTML = 'Temperature: ' + toFahrenheit(obj.main.temp) + 'F';
             feelsLike.innerHTML = 'Feels like: ' + toFahrenheit(obj.main.feels_like) + 'F';
+            returnBtn.innerHTML = 'Return to search';
 
             temp.addEventListener('click', () => {
                 temp.innerHTML = bool1 ?
@@ -89,7 +92,13 @@
                 bool2 = !bool2;
             });
 
-            container.append(city, weather, temp, feelsLike);
+            returnBtn.addEventListener('click', () => {
+                toggleForm();
+                removeSearchResults(container);
+            });
+
+            toggleForm();
+            container.append(city, weather, temp, feelsLike, returnBtn);
         } else {
             alert('Location was not found. Please try again.');
         }
@@ -102,5 +111,17 @@
 
     function toCelsius(val) {
         return Math.floor(val - 273.15);
+    }
+
+    function toggleForm() {
+        document.querySelector('form').classList.toggle('hide');
+    }
+
+    function removeSearchResults(node) {
+        if (node.childNodes.length) {
+            Array.from(node.childNodes).forEach((child) => {
+                child.remove();
+            });
+        }
     }
 })();
