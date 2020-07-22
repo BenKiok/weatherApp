@@ -9,3 +9,62 @@
 .hide {
     display: none;
 }
+
+button {
+    font-size: 1.2rem;
+    padding: 5px 12px;
+}
+
+form {
+    width: 55%;
+    margin: auto;
+}
+
+form h1 {
+    margin: 40px 0 30px 0;
+    padding-bottom: 20px;
+    font-size: 2.4rem;
+    font-weight: 600;
+    border-bottom: #c9c9c9 solid 1px;
+}
+
+form label {
+    font-size: 1.4rem;
+}
+
+form h2 {
+    border-top: #d9d9d9 solid 1px;
+    border-bottom: #d9d9d9 solid 1px;
+    font-size: 1.3rem;
+    margin: 18px auto;
+    width: 10%;
+}
+
+form input {
+    margin: 6px;
+    font-size: 1.2rem;
+    text-align: left;
+    padding: 0 5px;
+}
+
+form button {
+    display: block;
+    margin: 25px auto;
+}
+
+form button, #results h3 ~ h3, #results button {
+    cursor: pointer;
+}
+
+#results h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 40px 0 30px 0;
+    padding-bottom: 20px;
+    border-bottom: #c9c9c9 solid 1px;
+}
+
+#results h3 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+}
