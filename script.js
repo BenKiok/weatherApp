@@ -68,28 +68,36 @@ const weatherApp = (() => {
                   temp = document.createElement('h3'),
                   feelsLike = document.createElement('h3'),
                   returnBtn = document.createElement('button');
-            let bool1, bool2;
+            let bool;
 
-            city.innerHTML = "Today's weather in " + obj.name;
+            city.innerHTML = "Current weather in " + obj.name;
             weather.innerHTML = obj.weather[0].main;
             temp.innerHTML = 'Temperature: ' + toFahrenheit(obj.main.temp) + 'F';
             feelsLike.innerHTML = 'Feels like: ' + toFahrenheit(obj.main.feels_like) + 'F';
             returnBtn.innerHTML = 'Return to search';
 
             temp.addEventListener('click', () => {
-                temp.innerHTML = bool1 ?
-                    'Temperature: ' + toFahrenheit(obj.main.temp) + 'F' :
-                    'Temperature: ' + toCelsius(obj.main.temp) + 'C'
+                if (bool) {
+                    temp.innerHTML = 'Temperature: ' + toFahrenheit(obj.main.temp) + 'F';
+                    feelsLike.innerHTML = 'Feels like: ' + toFahrenheit(obj.main.feels_like) + 'F';
+                } else {
+                    temp.innerHTML = 'Temperature: ' + toCelsius(obj.main.temp) + 'C';
+                    feelsLike.innerHTML = 'Feels like: ' + toCelsius(obj.main.feels_like) + 'C';
+                }
 
-                bool1 = !bool1;
+                bool = !bool;
             });
 
             feelsLike.addEventListener('click', () => {
-                feelsLike.innerHTML = bool2 ?
-                    'Feels like: ' + toFahrenheit(obj.main.feels_like) + 'F' :
-                    'Feels like: ' + toCelsius(obj.main.feels_like) + 'C'
+                if (bool) {
+                    temp.innerHTML = 'Temperature: ' + toFahrenheit(obj.main.temp) + 'F';
+                    feelsLike.innerHTML = 'Feels like: ' + toFahrenheit(obj.main.feels_like) + 'F';
+                } else {
+                    temp.innerHTML = 'Temperature: ' + toCelsius(obj.main.temp) + 'C';
+                    feelsLike.innerHTML = 'Feels like: ' + toCelsius(obj.main.feels_like) + 'C';
+                }
 
-                bool2 = !bool2;
+                bool = !bool;
             });
 
             returnBtn.addEventListener('click', () => {
